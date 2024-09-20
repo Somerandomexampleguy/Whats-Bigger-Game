@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type "what's bigger" 100 times to win!</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            margin-top: 50px; 
+            background-color: #f0f0f0; 
+            color: #333; 
+        }
+        h1 { 
+            font-size: 28px; 
+            margin-bottom: 20px; 
+        }
+        input { 
+            font-size: 20px; 
+            padding: 10px; 
+            width: 300px; 
+            border: 2px solid #007BFF; 
+            border-radius: 5px; 
+            margin-bottom: 10px; 
+        }
+        button { 
+            padding: 10px 20px; 
+            font-size: 18px; 
+            background-color: #007BFF; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+        }
+        button:hover { 
+            background-color: #0056b3; 
+        }
+        #result { 
+            margin-top: 20px; 
+            font-size: 22px; 
+            font-weight: bold; 
+        }
+        #restartButton { 
+            display: none; 
+            margin-top: 20px; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Type "what's bigger" 100 times to win!</h1>
+    <input type="text" id="userInput" placeholder="Type here..." />
+    <button onclick="submitInput()">Submit</button>
+    <div id="result"></div>
+    <button id="restartButton" onclick="restartGame()">Restart Game</button>
+
+    <script>
+        let count = 0;
+        const total = 100;
+        const correctInput = "whats bigger";
+        let wrongAttempts = 0;
+
+        document.getElementById("userInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                submitInput();
+            }
+        });
+
+        document.getElementById("userInput").addEventListener("paste", function(event) {
+            event.preventDefault(); // Disable paste
+        });
+
+        function submitInput() {
+            let userInput = document.getElementById("userInput").value;
+            // Auto-correct to "whats bigger"
+            if (userInput.toLowerCase() === "what's bigger") {
+                userInput = correctInput;
+            }
+            document.getElementById("userInput").value = ""; // Clear input
+
+            if (userInput !== correctInput) {
+                wrongAttempts++;
+            }
+
+            count++;
+
+            if (count === total) {
+                if (wrongAttempts === 0) {
+                    document.getElementById("result").innerText = "Congratulations! You typed it 100 times correctly!";
+                } else {
+                    document.getElementById("result").innerText = `You typed it wrong ${wrongAttempts} time(s). Better luck next time!`;
+                }
+                document.getElementById("restartButton").style.display = "block"; // Show restart button
+            }
+        }
+
+        function restartGame() {
+            count = 0;
+            wrongAttempts = 0;
+            document.getElementById("result").innerText = "";
+            document.getElementById("userInput").value = "";
+            document.getElementById("restartButton").style.display = "none"; // Hide restart button
+        }
+    </script>
+</body>
+</html>
