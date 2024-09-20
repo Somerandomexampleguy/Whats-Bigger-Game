@@ -1,2 +1,2 @@
-# What-s-Bigger-Game
+# What's-Bigger-Game
 Don't mess up ;)
